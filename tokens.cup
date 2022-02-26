@@ -3,27 +3,47 @@ import java.util.*;
 
 terminal String CLASS;
 terminal String ID;
-
 terminal QUESTION;
-
-terminal AND, OR, TRUE, FALSE;
-
-terminal READ, PRINT, PRINTLN;
-
-terminal INC, DEC, NOT;
-
-terminal MULTI, DIV, PLUS, MINUS;
-
-terminal EQ, LT, GT, LTE, GTE, NE;
-
-terminal IF, ELSE, WHILE, RETURN;
-
-terminal SEMI, COMMA, LROUND, RROUND, LCURLY, RCURLY, LSQR, RSQR, ASSIGN, COLON;
+terminal AND;
+terminal OR;
+terminal TRUE;
+terminal FALSE;
+terminal READ;
+terminal PRINT;
+terminal PRINTLN;
+terminal INC;
+terminal DEC;
+terminal NOT;
+terminal MULTI;
+terminal DIV;
+terminal PLUS;
+terminal MINUS;
+terminal EQUAL;
+terminal LT;
+terminal GT;
+terminal LTE;
+terminal GTE;
+terminal NOTEQUAL;
+terminal IF;
+terminal ELSE;
+terminal WHILE;
+terminal RETURN;
+terminal SEMI;
+terminal COMMA;
+terminal LEFTROUND;
+terminal RIGHTROUND;
+terminal LEFTCBR;
+terminal RIGHTCBR;
+terminal LEFTSQR;
+terminal RIGHTSQR;
+terminal ASSIGN;
+terminal COLON;
 terminal FINAL;
 terminal CHAR, INT, FLOAT, VOID, BOOL;
 terminal String CHARLIT, STRLIT, INTLIT, FLOATLIT;
 
-terminal INLINECOMMMENT, MULTICOMMMENT;
+terminal INLINECOMMMENT;
+terminal MULTICOMMMENT;
 
 non terminal dummy;
 dummy ::= ;

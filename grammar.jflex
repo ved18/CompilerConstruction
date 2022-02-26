@@ -80,15 +80,15 @@ read					{return newSym(sym.READ, "read");}
 print					{return newSym(sym.PRINT, "print");}
 printline			    {return newSym(sym.PRINTLN, "printline");}
 return 				    {return newSym(sym.RETURN, "return");}
-"("						{return newSym(sym.LROUND, "(");}
-")"						{return newSym(sym.RROUND, ")");}
+"("						{return newSym(sym.LEFTROUND, "(");}
+")"						{return newSym(sym.RIGHTROUND, ")");}
 "++"					{return newSym(sym.INC, "++");}
 "--"					{return newSym(sym.DEC, "--");}
-"{"						{return newSym(sym.LCURLY, "{");}
-"}"						{return newSym(sym.RCURLY, "}");}
+"{"						{return newSym(sym.LEFTCBR, "{");}
+"}"						{return newSym(sym.RIGHTCBR, "}");}
 else					{return newSym(sym.ELSE, "else");}
-"["						{return newSym(sym.LSQR, "[");}
-"]"						{return newSym(sym.RSQR, "]");}
+"["						{return newSym(sym.LEFTSQR, "[");}
+"]"						{return newSym(sym.RIGHTSQR, "]");}
 ","						{return newSym(sym.COMMA, ",");}
 {intlit}			    {return newSym(sym.INTLIT, yytext());}
 {floatlit}		        {return newSym(sym.FLOATLIT, yytext());}
@@ -107,10 +107,10 @@ false					{return newSym(sym.FALSE, "false");}
 "/"						{return newSym(sym.DIV, "/");}
 "<"						{return newSym(sym.LT, "<");}
 ">"						{return newSym(sym.GT, ">");}
-"=="					{return newSym(sym.EQ, "==");}
+"=="					{return newSym(sym.EQUAL, "==");}
 "<="					{return newSym(sym.LTE, "<=");}
 ">="					{return newSym(sym.GTE, ">=");}
-"<>"					{return newSym(sym.NE, "<>");}
+"<>"					{return newSym(sym.NOTEQUAL, "<>");}
 "||"					{return newSym(sym.OR, "||");}
 "&&"					{return newSym(sym.AND, "&&");}
 
