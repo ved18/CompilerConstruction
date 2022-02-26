@@ -1,14 +1,21 @@
 varName
 100
 01
+1.
+.1
+x=z+y;
 3.14
+a
 'a'
 'z'
 '_'
 '.'
+-
 "abc"
-"sphinx of black quartz, judge my vow"
+"\n sphinx of black quartz, judge my vow"
 \\this is a comment
 \*
 this is a multiline block comment.
 *\
+Hello
+GOod
