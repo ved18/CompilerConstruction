@@ -41,9 +41,257 @@ terminal COLON;
 terminal FINAL;
 terminal CHAR, INT, FLOAT, VOID, BOOL;
 terminal String CHARLIT, STRLIT, INTLIT, FLOATLIT;
-
 terminal INLINECOMMMENT;
 terminal MULTICOMMMENT;
 
-non terminal dummy;
-dummy ::= ;
+// NON TERMINALS //
+
+non terminal Program program;
+non terminal Memberdecls memberdecls;
+non terminal Fielddecls fielddecls;
+non terminal Methoddecls methoddecls;
+non terminal Fielddecl fielddecl;
+non terminal Optfinal optionalfinal;
+non terminal Optexpr optionalexpr;
+non terminal Methoddecl methoddecl;
+non terminal Optsemi optionalsemi;
+non terminal Rettype returntype;
+non terminal Type type;
+non terminal Argdecls argdecls;
+non terminal Argdecllist argdecllist;
+non terminal Argdecl argdecl;
+non terminal Stmts stmts;
+non terminal Stmt stmt;
+non terminal Ifend ifend;
+non terminal Name name;
+non terminal Args args;
+non terminal Readlist readlist;
+non terminal Printlist printlist;
+non terminal Printlinelist printlinelist;
+non terminal Expr expr;
+non terminal Binaryop Binaryop;
+
+// PRECEDENCE
+terminal UPLUS, UMINUS;
+
+// DANGLING 
+precedence left ELSE;
+
+// ASSIGN
+precedence left ASSIGN;
+
+// TERNARY
+precedence left QUESTION;
+
+// EQUALITY
+precedence left OR;
+precedence left AND;
+
+// RELATION
+precedence left NOTEQUAL, EQUAL;
+precedence left GT, GTE, LT, LTE;
+
+// MATH
+precedence left PLUS, MINUS;
+precedence left MULTI, DIV;
+
+// UNARY
+precedence left NOT, UPLUS, UMINUS;
+
+start with program;
+
+program ::= CLASS ID:id LEFTCBR  memberdecls:mbrs RIGHTCBR
+		{: RESULT = new Program(id, mbrs); :};
+
+memberdecls ::=	fielddecl:f methoddecls:mtds
+			{: RESULT = new Memberdecls(f, mtds); :}
+			| methoddecls:mtds
+			{: RESULT = new Memberdecls(mtds); :}
+			|
+			{: RESULT = null :};
+
+fielddecls	::=	fielddecl:f fielddecls:fs
+			{: RESULT = new Fielddecls(f, fs); :}
+			| fielddecl:f
+			{: RESULT = new Fielddecls(f); :}
+			|
+			{: RESULT = null :};
+
+methoddecls	::=	methoddecl:m methoddecls:mtds
+			{: RESULT = new Methoddecls(m, mtds); :}
+			| methoddecl:m
+			{: RESULT = new Methoddecls(m); :}
+			| 
+			{: RESULT = null :};
+
+
+fielddecl	::=	FINAL type:t ID:id optionalexpr:opex SEMI
+			{: RESULT = new Fielddecl(true, t, id, opex); :}
+			| type:t ID:id optionalexpr:opex SEMI
+			{: RESULT = new Fielddecl(false, t, id, opex); :}
+			| type:t ID:id LEFTSQR INTLIT:len RIGHTSQR SEMI
+			{: RESULT = new Fielddecl(t, id, Integer.parseInt(len)); :};
+
+optionalexpr	::=	ASSIGN expr:e
+				{: RESULT = e; :}
+				|
+				{: RESULT = null; :};
+
+methoddecl	::=	returntype:rt ID:id LEFTROUND argdecls:as RIGHTROUND LEFTCBR fielddecls:fs stmts:sts RIGHTCBR optionalsemi:opsemi
+			{: RESULT = new Methoddecl(t, id, as, fs, sts, opsemi); :};
+
+optionalsemi	::=	SEMI
+				{: RESULT = true; :}
+				|
+				{: RESULT = false; :};
+
+returntype	::= type:t
+			{: RESULT = new Rettype(t); :}
+			|
+			VOID
+			{: RESULT = new Rettype(); :};
+
+type	::=	INT
+		{: RESULT = new Type("INT"); :}
+		|	FLOAT
+		{: RESULT = new Type("FLOAT"); :}
+		|	BOOL
+		{: RESULT = new Type("BOOL"); :}
+		| CHAR
+		{: RESULT = new Type("CHAR"); :};
+
+argdecls	::=	argdecllist:als
+			{: RESULT = new Argdecl(als); :}
+			|
+			{: RESULT = null; :};
+
+argdecllist ::=	argdecl:adcl COMMA argdecllist:als
+			{: RESULT = new Argdecllist(adcl, als); :}
+			|
+			argdecl:adcl
+			{: RESULT = new Argdecllist(adcl) :}
+			|
+			{: RESULT = null; :};
+
+argdecl ::=	type:t ID:id
+		{:	RESULT = new Argdecl(t, id, false); :}
+		|	type:t ID:id LEFTSQR RIGHTSQR
+		{:	RESULT = new Argdecl(t, id, true); :};
+
+stmts	::=	stmt:st stmts:sts
+		{: RESULT = new Stmts(st, sts) :}
+		|
+		{: RESULT = null; :};
+		
+stmt ::=	IF LEFTROUND expr:e RIGHTROUND stmt:st ifend:ifend
+			{:	RESULT = new Stmt(e, st, ifend); :}
+			|	WHILE LEFTROUND expr:e RIGHTROUND stmt:st
+			{:	RESULT = new Stmt(e, st); :}
+			|	name:nm ASSIGN expr:e SEMI
+			{:	RESULT = new Stmt(nm, e); :}
+			|	READ LEFTROUND readlist:rlist RIGHTROUND SEMI
+			{:	RESULT = new Stmt("read", rlist); :}
+			|	PRINT LEFTROUND printlist:plist RIGHTROUND SEMI
+			{:	RESULT = new Stmt("print", plist); :}
+			|	PRINTLN LEFTROUND printlinelist:plinelist RIGHTROUND SEMI
+			{:	RESULT = new Stmt("printline", plinelist); :}
+			|	ID:id LEFTROUND RIGHTROUND SEMI
+			{:	RESULT = new Stmt(id); :}
+			|	ID:id LEFTROUND args:arg RIGHTROUND SEMI
+			{:	RESULT = new Stmt(id, args); :}
+			|	RETURN SEMI
+			{:	RESULT = new Stmt(); :}
+			|	RETURN expr:e SEMI
+			{:	RESULT = new Stmt(e); :}
+			|	name:nm INC SEMI
+			{:	RESULT = new Stmt(nm, "++"); :}
+			|	name:nm DEC SEMI
+			{:	RESULT = new Stmt(nm, "--"); :}
+			| 	LEFTCBR fielddecls:fs stmts:sts RIGHTCBR optionalsemi:opsemi
+			{:	RESULT = new Stmt(fs, sts, opsemi); :};
+
+ifend	::=	ELSE stmt:st
+			{: RESULT = st; :}
+			|
+			{: RESULT = null; :};
+
+name	::=	ID:id
+		{:	RESULT = new Name(id); :}
+        | ID:id LEFTSQR expr:e RIGHTSQR
+		{: RESULT = new Name(id, e); :};
+
+args	::=	expr:e COMMA args:args
+		{: RESULT = new Args(e, args); :}
+		|	expr:e
+		{: RESULT = new Args(e); :};
+
+readlist	::=	name:nm COMMA readlist:rlist
+			{:	RESULT = new Readlist(nm, rlist); :}
+			|	name:n
+			{:	RESULT = new Readlist(nm); :};
+
+printlist	::=	expr:e COMMA printlist:plist
+			{: RESULT = new Printlist(e, plist); :}
+			|	expr:e
+			{: RESULT = new Printlist(e); :};
+
+printlinelist	::=	printlist:plist 
+				{: RESULT = new Printlinelist(plist); :}
+				|
+				{: RESULT = new Printlinelist(); :};
+
+
+expr 	::=	name:nm
+		{: 	RESULT = new Expr(nm); :}
+        |	ID:id LEFTROUND RIGHTROUND
+		{:	RESULT = new Expr(id, true); :}
+		|	ID:id LEFTROUND args:args RIGHTROUND
+		{: 	RESULT = new Expr(id, args); :}
+		|	INTLIT:i
+		{: 	RESULT = new Expr(Integer.parseInt(i)); :}
+		|   CHARLIT:ch
+		{: 	RESULT = new Expr(ch, 'c'); :}
+		|   STRLIT:str
+		{:  RESULT = new Expr(str, 's'); :}
+		|	FLOATLIT:flt
+		{: 	RESULT = new Expr(Float.parseFloat(flt)); :}
+		| 	TRUE
+		{: 	RESULT = new Expr(true); :}
+		| 	FALSE
+		{:	RESULT = new Expr(false); :}
+		| 	LEFTROUND expr:e RIGHTROUND
+		{:	RESULT = new Expr(e); :}
+		|	NOT expr:e
+		{: 	RESULT = new Expr(e, "~"); :}
+		|	MINUS expr:e 
+		{:	RESULT = new Expr(e, "-"); :} %prec UMINUS
+		|	PLUS expr:e 
+		{: 	RESULT = new Expr(e, "+"); :} %prec UPLUS
+		|	LEFTROUND type:t RIGHTROUND expr:e
+		{:	RESULT = new Expr(t, e); :}
+		|	expr:e1 PLUS expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("+"), e2); :}
+		|	expr:e1 MINUS expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("-"), e2); :}
+		|	expr:e1 MULTI expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("*"), e2); :}
+		|	expr:e1 DIV expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("/"), e2); :}
+		|	expr:e1 GT expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop(">"), e2); :}
+		|	expr:e1 LT expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("<"), e2); :}
+		|	expr:e1 GTE expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop(">="), e2); :}
+		|	expr:e1 LTE expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("<="), e2); :}
+		|	expr:e1 EQUAL expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("=="), e2); :}
+		|	expr:e1 NOTEQUAL expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("<>"), e2); :}
+		|	expr:e1 OR expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("||"), e2); :}
+		|	expr:e1 AND expr:e2
+		{: 	RESULT = new Expr(e1, new Binaryop("&&"), e2); :}
+		|	LEFTROUND expr:e1 QUESTION expr:e2 COLON expr:e3 RIGHTROUND
+		{: 	RESULT = new Expr(e1, e2, e3); :};

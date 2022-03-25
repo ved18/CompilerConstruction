@@ -13,15 +13,30 @@ default: run
 				$(JAVAC) -cp $(CP) $*.java
 
 FILE=		Lexer.java      parser.java    sym.java \
-				lexerTest.java
+				lexerTest.java \
+				Argdecl.java Argdecllist.java Args.java \
+				Binaryop.java Expr.java Fielddecl.java Fielddecls.java \
+				Memberdecls.java Methoddecl.java Methoddecls.java Name.java \
+				Printlinelist.java Printlist.java Program.java Readlist.java \
+				Rettype.java Stmt.java Stmts.java Token.java
 
-run: lexTest.txt
+run: testParse.txt lexTest.txt
+
+parserTests: build
+	$(JAVA) -cp $(CP) ParserTest $$f >> parserTestOutputs.txt
+	cat -n parserTestOutputs.txt
+
+testParse.txt: all
+		$(JAVA) -cp $(CP) Parsertest testParse.txt > testParse-output.txt
+		cat -n testParse-output.txt
 
 lexTest.txt: all
 		$(JAVA) -cp $(CP) lexerTest lexTest.txt > lexTest-output.txt
 		cat -n lexTest-output.txt
 
 all: Lexer.java parser.java $(FILE:java=class)
+
+dump: Lexer.java parserD.java $(FILE:java=class)
 
 clean:
 		rm -f *.class *~ *.bak Lexer.java parser.java sym.java
