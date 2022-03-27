@@ -1,34 +1,34 @@
-import javax.sound.sampled.AudioFileFormat.Type;
+class Fielddecl extends Token {
+  boolean isFinal;
+  String type, id;
+  int arrLength;
+  Expr opex;
+  int declType;
 
-public class Fielddecl implements Token {
-  boolean optFinal;
-  Type tp;
-  String id;
-  Expr optionalex;
-  int length;
-
-  public Fielddecl(Type type, String id, Expr optionalex, boolean optFinal) {
-    this.tp = type;
+  public Fielddecl(String type, String id, Expr opex, boolean isFinal) {
+    this.type = type;
     this.id = id;
-    this.optionalex = optionalex;
-    this.optFinal = optFinal;
-    this.length = 0;
+    this.opex = opex;
+    this.isFinal = isFinal;
+    declType = 0;
   }
 
-  public Fielddecl(Type type, String id, int len) {
-    this.tp = type;
+  public Fielddecl(String type, String id, int len) {
+    this.type = type;
     this.id = id;
-    this.length = len;
+    this.arrLength = len;
+    declType = 1;
   }
 
-  public String toString(int t) {
-    String result = "";
-
-    if (this.length == 0 && optFinal == true)
-      result = "FINAL" + tp.toString(t) + " " + id + " " + optionalex.toString(t);
-    else
-      result = tp.toString(t) + " " + id + " " + optionalex.toString(t);
-
-    return result;
+  public String toString(int depth) {
+    switch (declType) {
+      case 0:
+        return getTabs(depth) + (isFinal ? "final " : "") + type + " " + id
+            + (opex != null ? " = " + opex.toString() : "") + ";";
+      case 1:
+        return getTabs(depth) + type + " " + id + "[" + arrLength + "]" + ";";
+      default:
+        return "";
+    }
   }
 }

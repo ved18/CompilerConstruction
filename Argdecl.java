@@ -1,17 +1,14 @@
-public class Argdecl implements Token {
-    Type tp;
-    String id;
-    Boolean isSqaure;
+class Argdecl extends Token {
+    String type, id;
+    boolean isArray;
 
-    public Argdecl(Type tp, String id, Boolean isSquare) {
-        this.tp = tp;
+    public Argdecl(String type, String id, boolean isArray) {
+        this.type = type;
         this.id = id;
-        this.isSqaure = isSquare;
+        this.isArray = isArray;
     }
 
     public String toString(int t) {
-        if (isSqaure)
-            return tp.toString(t) + " " + id + " [ ]";
-        return tp.toString(t) + " " + id;
+        return type + " " + id + (isArray ? "[]" : "");
     }
 }

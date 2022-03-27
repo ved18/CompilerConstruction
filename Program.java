@@ -1,14 +1,14 @@
-public class Program implements Token {
-    String id;
+class Program extends Token {
+    String className;
     Memberdecls memberdecls;
 
     public Program(String id, Memberdecls m) {
-        this.id = id;
-        this.memberdecls = m;
-        // table = new SymTable();
+        className = id;
+        memberdecls = m;
     }
 
-    public String toString(int t) {
-        return "class " + this.id + " {\n" + memberdecls.toString(t + 1) + "}";
+    public String toString(int depth) {
+        return "class " + className + " {\n" + memberdecls.toString(depth + 1) + "}";
     }
+
 }

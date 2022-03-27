@@ -1,27 +1,37 @@
-public class Methoddecl implements Token {
-    Rettype rtype;
-    String id;
-    Argdecls as;
-    Fielddecls fs;
-    Stmts sts;
-    Boolean optionalSemi;
+import java.util.ArrayList;
 
-    public Methoddecl(Rettype rtype, String id, Argdecls as, Fielddecls fs, Stmts sts, Boolean optionalSemi) {
-        this.rtype = rtype;
-        this.as = as;
-        this.fs = fs;
-        this.sts = sts;
-        this.optionalSemi = optionalSemi;
+class Methoddecl extends Token {
+    ArrayList<Argdecl> argdecls;
+    ArrayList<Fielddecl> fielddecls;
+    ArrayList<Stmt> stmts;
+    String type, id;
+    boolean hasSemi;
+
+    public Methoddecl(String type, String id, ArrayList<Argdecl> as, ArrayList<Fielddecl> fs, ArrayList<Stmt> sts,
+            boolean semi) {
+        this.type = type;
+        this.id = id;
+        argdecls = as;
+        fielddecls = fs;
+        stmts = sts;
+        hasSemi = semi;
     }
 
-    public String toString(int t) {
-        if (optionalSemi && as != null)
-            return rtype.toString(t) + " " + id + " " + as.toString(t) + " " + fs.toString(t) + " " + sts.toString()
-                    + ";";
-        else if (optionalSemi && as == null)
-            return rtype.toString(t) + " " + id + " " + fs.toString(t) + " " + sts.toString() + ";";
-        else if (!optionalSemi && as != null)
-            return rtype.toString(t) + " " + id + " " + as.toString(t) + " " + fs.toString(t) + " " + sts.toString();
-        return rtype.toString(t) + " " + id + " " + fs.toString(t) + " " + sts.toString();
+    public String toString(int depth) {
+        String args = "";
+        for (Argdecl a : argdecls) {
+            args += a.toString() + ", ";
+        }
+        args = args.substring(0, args.length() > 0 ? args.length() - 2 : 0);
+
+        String result = getTabs(depth) + type + " " + id + "(" + args + ")" + " {\n";
+        for (Fielddecl f : fielddecls) {
+            result += f.toString(depth + 1) + "\n";
+        }
+        for (Stmt st : stmts) {
+            result += st.toString(depth + 1) + "\n";
+        }
+        result += getTabs(depth) + "}" + (hasSemi ? ";" : "");
+        return result;
     }
 }

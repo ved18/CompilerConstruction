@@ -14,17 +14,13 @@ default: run
 
 FILE=		Lexer.java      parser.java    sym.java \
 				lexerTest.java \
-				Argdecl.java Argdecllist.java Args.java \
-				Binaryop.java Expr.java Fielddecl.java Fielddecls.java \
-				Memberdecls.java Methoddecl.java Methoddecls.java Name.java \
-				Printlinelist.java Printlist.java Program.java Readlist.java \
-				Rettype.java Stmt.java Stmts.java Token.java
+				Argdecl.java \
+				BinaryOp.java Expr.java Fielddecl.java \
+				Methoddecl.java Name.java \
+				Program.java \
+				Stmt.java Token.java Parsertest.java
 
 run: testParse.txt lexTest.txt
-
-parserTests: build
-	$(JAVA) -cp $(CP) ParserTest $$f >> parserTestOutputs.txt
-	cat -n parserTestOutputs.txt
 
 testParse.txt: all
 		$(JAVA) -cp $(CP) Parsertest testParse.txt > testParse-output.txt

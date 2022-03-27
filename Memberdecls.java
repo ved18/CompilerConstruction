@@ -1,24 +1,31 @@
-public class Memberdecls implements Token {
-    Fielddecl fielddecl;
-    Methoddecls methoddecls;
+import java.util.ArrayList;
 
-    public Memberdecls(Fielddecl f, Methoddecls mds) {
-        this.fielddecl = f;
-        this.methoddecls = mds;
+class Memberdecls extends Token {
+    ArrayList<Fielddecl> fielddecls;
+    ArrayList<Methoddecl> methoddecls;
+
+    public Memberdecls(Fielddecl f, Memberdecls mds) {
+        mds.fielddecls.add(0, f);
+        this.fielddecls = mds.fielddecls;
+        this.methoddecls = mds.methoddecls;
     }
 
-    public Memberdecls(Methoddecls ms) {
-        this.fielddecl = null;
-        this.methoddecls = ms;
+    public Memberdecls(ArrayList<Fielddecl> fs, ArrayList<Methoddecl> ms) {
+        fielddecls = fs;
+        methoddecls = ms;
     }
 
-    public String toString(int t) {
+    public Memberdecls(ArrayList<Methoddecl> ms) {
+        fielddecls = new ArrayList<Fielddecl>();
+        methoddecls = ms;
+    }
+
+    public String toString(int depth) {
         String result = "";
-        if (fielddecl != null)
-            result += fielddecl.toString(t) + "\n" + methoddecls.toString(t);
-        else
-            result = methoddecls.toString(t) + "\n";
-
+        for (Fielddecl f : fielddecls)
+            result += f.toString(depth) + "\n";
+        for (Methoddecl m : methoddecls)
+            result += m.toString(depth) + "\n";
         return result;
     }
 }

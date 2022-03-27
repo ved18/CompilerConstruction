@@ -1,7 +1,8 @@
-public class Binaryop implements Token {
+class BinaryOp extends Token {
+
     String op;
 
-    public Binaryop(String op) {
+    public BinaryOp(String op) {
         this.op = op;
     }
 

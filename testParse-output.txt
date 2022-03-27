@@ -1,0 +1,55 @@
+class testValid {
+	float sqrt(Argdecl@64cee07, Argdecl@3834d63f) {
+		float nextGuess;
+		nextGuess = (0.5 BinaryOp@19bb089b (guess BinaryOp@4563e9ab (square BinaryOp@11531931 guess)));
+		if ((((nextGuess BinaryOp@2ff4f00f guess) BinaryOp@c818063 (- 1.0E-5)) BinaryOp@3f0ee7cb ((nextGuess BinaryOp@75bd9247 guess) BinaryOp@7d417077 1.0E-5)))
+		{
+			return nextGuess;
+		}
+		return sqrt(square, nextGuess);
+	}
+	float getDistance(Argdecl@7dc36524, Argdecl@35bbe5e8, Argdecl@2c8d66b2) {
+		int i = 0;
+		float sum = 0;
+		while ((i BinaryOp@3cb5cdba size))
+		{
+			sum = (sum BinaryOp@56cbfb61 ((vecA[i] BinaryOp@2d209079 vecB[i]) BinaryOp@6bdf28bb (vecA[i] BinaryOp@6b71769e vecB[i])));
+			i++;
+		}
+
+		return sqrt(sum, 2);
+	}
+	void main() {
+		float a[10];
+		float b[10];
+		final int maxSize = 10;
+		int thisSize;
+		bool validInput;
+		int i;
+		print((("Input the size of your vectors: (max:" BinaryOp@6e8dacdf maxSize) BinaryOp@7a79be86 ")"));
+		printline();
+		validInput = false;
+		while ((~ validInput))
+		{
+			read(thisSize);
+			if (((thisSize BinaryOp@34ce8af7 0) BinaryOp@b684286 (thisSize BinaryOp@880ec60 maxSize)))
+			{
+				validInput = true;
+			}
+			else
+			{
+				print((("Invalid size!\nInput the size of your vectors: (max:" BinaryOp@3f3afe78 maxSize) BinaryOp@7f63425a ")"));
+				printline();
+			}
+		}
+
+		i = 0;
+		while ((i BinaryOp@36d64342 thisSize))
+		{
+			read(a[i], b[i]);
+			i++;
+		}
+
+		print("Distance between vectors is: ", getDistance(a, b, thisSize));
+	}
+}

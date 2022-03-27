@@ -20,8 +20,9 @@ public class Parsertest {
         Program program = null;
 
         try {
-            program = (Program) parser.parse().value;
-            // program = (Program) parser.debug_parse().value;
+            program = (Program) parser.debug_parse().value;
+            // program = (Program) parser.parse().value;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
