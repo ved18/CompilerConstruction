@@ -68,3 +68,12 @@ Expr → Name | id ( ) | id ( Args ) | intlit | charlit | strlit | floatlit | tr
 | ( Expr ) | ~ Expr | - Expr | + Expr | ( Type ) Expr | Expr Binaryop Expr | ( Expr ? Expr : Expr )
 Binaryop → * | / | + | - | < | > | <= | >= | == | <> | || | &&
 ```
+
+Project part 2:
+
+```
+We have implemented a parser to create Abstract Syntax tree.
+To run the project use same instructions as above.
+To run tests please use the file testParse.txt.
+The output can be seen in Parseroutput.txt.
+```

@@ -23,8 +23,8 @@ FILE=		Lexer.java      parser.java    sym.java \
 run: testParse.txt lexTest.txt
 
 testParse.txt: all
-		$(JAVA) -cp $(CP) Parsertest testParse.txt > testParse-output.txt
-		cat -n testParse-output.txt
+		$(JAVA) -cp $(CP) Parsertest testParse.txt > Parseroutput.txt
+		cat -n Parseroutput.txt
 
 lexTest.txt: all
 		$(JAVA) -cp $(CP) lexerTest lexTest.txt > lexTest-output.txt
