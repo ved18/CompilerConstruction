@@ -31,7 +31,7 @@ non terminal Fielddecl fielddecl;
 non terminal Methoddecl methoddecl;
 non terminal Expr optionalexpr;
 non terminal Boolean optionalsemi;
-non terminal String type;
+non terminal Type type;
 non terminal ArrayList<Argdecl> argdecllist;
 non terminal ArrayList<Argdecl> argdecls;
 non terminal Argdecl argdecl;
@@ -100,13 +100,13 @@ optionalsemi 	::=	SEMI
 				{: RESULT = false; :};
 
 type 	::=	INT
-		{: RESULT = "int"; :}
+		{: RESULT = new Type("INT"); :}
 		|	FLOAT
-		{: RESULT = "float"; :}
+		{: RESULT = new Type("float"); :}
 		|	BOOL
-		{: RESULT = "bool"; :}
+		{: RESULT = new Type("bool"); :}
 		| CHAR
-		{: RESULT = "char"; :};
+		{: RESULT = new Type("char"); :};
 
 argdecls 	::=	argdecllist:alst
 			{: RESULT = alst; :}

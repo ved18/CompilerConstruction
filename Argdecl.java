@@ -3,8 +3,8 @@ class Argdecl extends Token {
     String id;
     boolean addSquare;
 
-    public Argdecl(String type, String id, boolean addSquare) {
-        this.type = type;
+    public Argdecl(Type type, String id, boolean addSquare) {
+        this.type = type.toString();
         this.id = id;
         this.addSquare = addSquare;
     }

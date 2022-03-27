@@ -1,5 +1,5 @@
 class testClass {
-	int testInt;
+	INT testInt;
 	bool testBool;
 	char testChar;
 	float testFloat;
@@ -31,8 +31,8 @@ class testClass {
 		}
 		return;
 	}
-	void testNestedIfsInWhiles(int x[], int y) {
-		int newTestVal;
+	void testNestedIfsInWhiles(INT x[], INT y) {
+		INT newTestVal;
 		bool thisWorks = true;
 		final char theMan = '\'';
 		float testDec = 3.14;

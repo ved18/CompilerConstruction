@@ -50,8 +50,8 @@ class Expr extends Token {
         caseNo = 6;
     }
 
-    public Expr(String ct, Expr e) {
-        typeCast = ct;
+    public Expr(Type type, Expr e) {
+        typeCast = type.toString();
         expr = new Expr[] { e };
         caseNo = 7;
     }

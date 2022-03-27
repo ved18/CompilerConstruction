@@ -5,16 +5,16 @@ class Fielddecl extends Token {
   Expr opex;
   int caseNo;
 
-  public Fielddecl(String type, String id, Expr opex, boolean isFinal) {
-    this.type = type;
+  public Fielddecl(Type type, String id, Expr opex, boolean isFinal) {
+    this.type = type.toString();
     this.id = id;
     this.opex = opex;
     this.isFinal = isFinal;
     caseNo = 0;
   }
 
-  public Fielddecl(String type, String id, int len) {
-    this.type = type;
+  public Fielddecl(Type type, String id, int len) {
+    this.type = type.toString();
     this.id = id;
     this.arrLength = len;
     caseNo = 1;
