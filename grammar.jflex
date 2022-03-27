@@ -74,9 +74,6 @@ return 					{return newSym(sym.RETURN, "return");}
 "~"						{return newSym(sym.NOT, "~");}
 "?"						{return newSym(sym.QUESTION, "?");}
 ":"						{return newSym(sym.COLON, ":");}
-read					{return newSym(sym.READ, "read");}
-print					{return newSym(sym.PRINT, "print");}
-printline				{return newSym(sym.PRINTLN, "printline");}
 "++"					{return newSym(sym.INC, "++");}
 "--"					{return newSym(sym.DEC, "--");}
 "*"						{return newSym(sym.MULTI, "*");}
@@ -91,6 +88,9 @@ printline				{return newSym(sym.PRINTLN, "printline");}
 ">="					{return newSym(sym.GTE, ">=");}
 "||"					{return newSym(sym.OR, "||");}
 "&&"					{return newSym(sym.AND, "&&");}
+read					{return newSym(sym.READ, "read");}
+print					{return newSym(sym.PRINT, "print");}
+printline				{return newSym(sym.PRINTLN, "printline");}
 void					{return newSym(sym.VOID, "void");}
 int						{return newSym(sym.INT, "int");}
 float					{return newSym(sym.FLOAT, "float");}
@@ -106,8 +106,8 @@ false					{return newSym(sym.FALSE, "false");}
 {id}					{return newSym(sym.ID, yytext());}
 
 {whitespace}			{/* whitespace */}
-{inlinecomment}			{return newSym(sym.INLINECOMMMENT, "Inline comment");}
-{multi_comment}         {return newSym(sym.MULTICOMMMENT, "Multiline comment ");}
+{inlinecomment}			{}
+{multi_comment}         {}
 
 . {System.out.println("Illegal character, " + yytext() + " line:" + yyline + " col:" + yychar);}
  

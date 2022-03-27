@@ -1,25 +1,11 @@
 class BinaryOp extends Token {
+    String operator;
 
-    String op;
-
-    public BinaryOp(String op) {
-        this.op = op;
+    public BinaryOp(String operator) {
+        this.operator = operator;
     }
 
-    public boolean isArithmetic() {
-        return op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/");
-    }
-
-    public boolean isRelational() {
-        return op.equals("<") || op.equals("<=") || op.equals(">") || op.equals(">=") || op.equals("==")
-                || op.equals("<>");
-    }
-
-    public boolean isLogical() {
-        return op.equals("||") || op.equals("&&");
-    }
-
-    public String toString(int t) {
-        return op;
+    public String toString() {
+        return operator;
     }
 }

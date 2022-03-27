@@ -1,7 +1,0 @@
-Token #2, with value = 'class' at line 0, column 0
-Token #3, with value = 'test' at line 0, column 6
-Token #33, with value = '{' at line 0, column 11
-Token #41, with value = 'int' at line 1, column 4
-Token #3, with value = 'hello' at line 1, column 8
-Token #29, with value = ';' at line 1, column 13
-Token #34, with value = '}' at line 2, column 0

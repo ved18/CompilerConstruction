@@ -1,7 +1,7 @@
 public class Token {
-    protected String getTabs(int num) {
+    String addSpace(int spaces) {
         String tabs = "";
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < spaces; i++)
             tabs += "\t";
         return tabs;
     }

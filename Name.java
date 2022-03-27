@@ -1,22 +1,19 @@
 class Name extends Token {
     String id;
-    Expr index;
+    Expr expr;
 
     public Name(String id) {
         this.id = id;
-        this.index = null;
+        this.expr = null;
     }
 
-    public Name(String id, Expr e) {
+    public Name(String id, Expr ex) {
         this.id = id;
-        this.index = e;
+        this.expr = ex;
     }
 
     public String toString() {
-        return id + (hasIndex() ? "[" + index.toString() + "]" : "");
+        return id + (expr != null ? "[" + expr.toString() + "]" : "");
     }
 
-    private boolean hasIndex() {
-        return index != null;
-    }
 }

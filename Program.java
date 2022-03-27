@@ -7,8 +7,8 @@ class Program extends Token {
         memberdecls = m;
     }
 
-    public String toString(int depth) {
-        return "class " + className + " {\n" + memberdecls.toString(depth + 1) + "}";
+    public String toString(int t) {
+        return "class " + className + " {\n" + memberdecls.toString(t + 1) + "}";
     }
 
 }

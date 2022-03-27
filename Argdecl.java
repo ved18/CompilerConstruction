@@ -1,14 +1,15 @@
 class Argdecl extends Token {
-    String type, id;
-    boolean isArray;
+    String type;
+    String id;
+    boolean addSquare;
 
-    public Argdecl(String type, String id, boolean isArray) {
+    public Argdecl(String type, String id, boolean addSquare) {
         this.type = type;
         this.id = id;
-        this.isArray = isArray;
+        this.addSquare = addSquare;
     }
 
-    public String toString(int t) {
-        return type + " " + id + (isArray ? "[]" : "");
+    public String toString() {
+        return type + " " + id + (addSquare ? "[]" : "");
     }
 }

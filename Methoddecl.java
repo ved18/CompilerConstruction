@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 class Methoddecl extends Token {
     ArrayList<Argdecl> argdecls;
-    ArrayList<Fielddecl> fielddecls;
     ArrayList<Stmt> stmts;
     String type, id;
+    ArrayList<Fielddecl> fielddecls;
     boolean hasSemi;
 
     public Methoddecl(String type, String id, ArrayList<Argdecl> as, ArrayList<Fielddecl> fs, ArrayList<Stmt> sts,
@@ -17,21 +17,21 @@ class Methoddecl extends Token {
         hasSemi = semi;
     }
 
-    public String toString(int depth) {
+    public String toString(int t) {
         String args = "";
         for (Argdecl a : argdecls) {
             args += a.toString() + ", ";
         }
         args = args.substring(0, args.length() > 0 ? args.length() - 2 : 0);
 
-        String result = getTabs(depth) + type + " " + id + "(" + args + ")" + " {\n";
+        String result = addSpace(t) + type + " " + id + "(" + args + ")" + " {\n";
         for (Fielddecl f : fielddecls) {
-            result += f.toString(depth + 1) + "\n";
+            result += f.toString(t + 1) + "\n";
         }
         for (Stmt st : stmts) {
-            result += st.toString(depth + 1) + "\n";
+            result += st.toString(t + 1) + "\n";
         }
-        result += getTabs(depth) + "}" + (hasSemi ? ";" : "");
+        result += addSpace(t) + "}" + (hasSemi ? ";" : "");
         return result;
     }
 }
