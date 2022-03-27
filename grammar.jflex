@@ -1,7 +1,9 @@
 import java_cup.runtime.*;
 
 %%
-
+/*-*
+ * LEXICAL FUNCTIONS:
+ */
 %cup
 %line
 %column
@@ -10,12 +12,26 @@ import java_cup.runtime.*;
 
 %{
 
+/*
+ * NOTE: the above name ExampleLexer, will have to be changed here if
+ * you chose to rename the lexer object.
+ */
+
+/**
+ * Return a new Symbol with the given token id, and with the current line and
+ * column numbers.
+ */
 Symbol newSym(int tokenId) {
-	return new Symbol(tokenId, yyline, yycolumn);
+    return new Symbol(tokenId, yyline, yycolumn);
 }
 
+/**
+ * Return a new Symbol with the given token id, the current line and column
+ * numbers, and the given token value.  The value is used for tokens such as
+ * identifiers and numbers.
+ */
 Symbol newSym(int tokenId, Object value) {
-	return new Symbol(tokenId, yyline, yycolumn, value);
+    return new Symbol(tokenId, yyline, yycolumn, value);
 }
 
 %}
@@ -45,9 +61,9 @@ class					{return newSym(sym.CLASS, "class");}
 else					{return newSym(sym.ELSE, "else");}
 if						{return newSym(sym.IF, "if");}
 while					{return newSym(sym.WHILE, "while");}
-return 				{return newSym(sym.RETURN, "return");}
+return 					{return newSym(sym.RETURN, "return");}
 ";"						{return newSym(sym.SEMI, ";");}
-"="   				{return newSym(sym.ASSIGN, "=");}
+"="   					{return newSym(sym.ASSIGN, "=");}
 ","						{return newSym(sym.COMMA, ",");}
 "("						{return newSym(sym.LEFTROUND, "(");}
 ")"						{return newSym(sym.RIGHTROUND, ")");}
@@ -60,7 +76,7 @@ return 				{return newSym(sym.RETURN, "return");}
 ":"						{return newSym(sym.COLON, ":");}
 read					{return newSym(sym.READ, "read");}
 print					{return newSym(sym.PRINT, "print");}
-printline			{return newSym(sym.PRINTLN, "printline");}
+printline				{return newSym(sym.PRINTLN, "printline");}
 "++"					{return newSym(sym.INC, "++");}
 "--"					{return newSym(sym.DEC, "--");}
 "*"						{return newSym(sym.MULTI, "*");}
@@ -83,13 +99,13 @@ char					{return newSym(sym.CHAR, "char");}
 final					{return newSym(sym.FINAL, "final");}
 true					{return newSym(sym.TRUE, "true");}
 false					{return newSym(sym.FALSE, "false");}
-{intlit}			{return newSym(sym.INTLIT, yytext());}
-{floatlit}		{return newSym(sym.FLOATLIT, yytext());}
-{charlit}			{return newSym(sym.CHARLIT, yytext());}
-{strlit}			{return newSym(sym.STRLIT, yytext());}
+{intlit}				{return newSym(sym.INTLIT, yytext());}
+{floatlit}				{return newSym(sym.FLOATLIT, yytext());}
+{charlit}				{return newSym(sym.CHARLIT, yytext());}
+{strlit}				{return newSym(sym.STRLIT, yytext());}
 {id}					{return newSym(sym.ID, yytext());}
 
-{whitespace}	{/* whitespace */}
+{whitespace}			{/* whitespace */}
 {inlinecomment}			{return newSym(sym.INLINECOMMMENT, "Inline comment");}
 {multi_comment}         {return newSym(sym.MULTICOMMMENT, "Multiline comment ");}
 
